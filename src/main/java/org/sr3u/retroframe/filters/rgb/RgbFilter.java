@@ -43,6 +43,14 @@ public abstract class RgbFilter implements FastImageFilter {
         }
     }
 
+    public static Color applyIntensityMask(float[] channelIntensityMask, Color color) {
+        float[] rgbComponents = color.getRGBComponents(null);
+        for (int i = 0; i < rgbComponents.length; i++) {
+            rgbComponents[i] = Math.min(rgbComponents[i] * channelIntensityMask[i], 1.0f);
+        }
+        return colorFromRGBA(rgbComponents);
+    }
+
     protected void setColorMapper(Functionex<Color, Color> colorMapper) {
         this.colorMapper = colorMapper;
     }

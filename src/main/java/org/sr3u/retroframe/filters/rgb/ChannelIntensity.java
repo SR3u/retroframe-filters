@@ -9,19 +9,15 @@ import java.util.List;
 
 public class ChannelIntensity extends RgbFilter {
 
-    private float[] channelIntensityMask = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
+    private final float[] channelIntensityMask = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
 
     public ChannelIntensity() {
         super(null);
         setColorMapper(this::maskColor);
     }
 
-    public Color maskColor(Color c) {
-        float[] rgbComponents = c.getRGBComponents(null);
-        for (int i = 0; i < rgbComponents.length; i++) {
-            rgbComponents[i] = Math.min(rgbComponents[i] * channelIntensityMask[i], 1.0f);
-        }
-        return colorFromRGBA(rgbComponents);
+    Color maskColor(Color c) {
+        return RgbFilter.applyIntensityMask(this.channelIntensityMask, c);
     }
 
     @Override
