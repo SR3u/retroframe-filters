@@ -7,7 +7,7 @@ public class Autochrome extends RgbFilter {
 
     private static final Random RANDOM = new Random();
 
-    protected Autochrome() {
+    public Autochrome() {
         super(Autochrome::autochrome);
     }
 
