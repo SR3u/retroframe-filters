@@ -9,7 +9,12 @@ import java.util.List;
 
 public class ChannelIntensity extends RgbFilter {
 
-    private final float[] channelIntensityMask = new float[]{1.0f, 1.0f, 1.0f, 1.0f};
+    private static final float[] IDENTITY = {1.0f, 1.0f, 1.0f, 1.0f};
+
+    public float[] getChannelIntensityMask() {
+        return IDENTITY;
+    }
+
 
     public ChannelIntensity() {
         super(null);
@@ -17,14 +22,14 @@ public class ChannelIntensity extends RgbFilter {
     }
 
     Color maskColor(Color c) {
-        return RgbFilter.applyIntensityMask(this.channelIntensityMask, c);
+        return RgbFilter.applyIntensityMask(this.getChannelIntensityMask(), c);
     }
 
     @Override
     public ImageFilter init(List<String> parameters) {
         ArgParser param = new ArgParser(parameters);
-        for (int i = 0; i < channelIntensityMask.length; i++) {
-            channelIntensityMask[i] = (float) param.doubleAt(i).orElse(channelIntensityMask[i]);
+        for (int i = 0; i < getChannelIntensityMask().length; i++) {
+            getChannelIntensityMask()[i] = (float) param.doubleAt(i).orElse(getChannelIntensityMask()[i]);
         }
         return super.init(parameters);
     }
